@@ -1,5 +1,5 @@
 
-CRUD app on NextJS and Firebaes.
+CRUD app on NextJS and Firebase.
 
 <img src='public/next-crud.png'>
 
