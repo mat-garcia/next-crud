@@ -1,12 +1,13 @@
 interface ButtonProps {
     children: any
     color?: 'green' | 'blue' | 'gray'
-    clasName?: string
+    className?: string
+    onClick?: () => void
 }
 export default function Button(props: ButtonProps){
      const color = colorSwitch(props.color);
 
-    function colorSwitch(color){
+    function colorSwitch(color?:string){
         switch (color) {
             case 'green':
                 return 'from-green-400 to-green-500'
@@ -25,9 +26,9 @@ export default function Button(props: ButtonProps){
 
     }
     return (
-        <button className={`
+        <button onClick={props.onClick} className={`
             bg-gradient-to-r ${color} text-white px-4 py-2 rounded-md
-            ${props.clasName}
+            ${props.className}
        
        `}>
             {props.children}
