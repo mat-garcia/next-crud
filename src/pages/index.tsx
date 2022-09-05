@@ -4,26 +4,46 @@ import Table from '../components/Table';
 import Cliente from '../core/Cliente';
 import Button from '../components/Button';
 import Form from '../components/Form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import ClienteRepositorio from '../core/ClienteRepositorio';
+import ColecaoCliente from '../backend/db/ColecaoCliente';
 
 export default function Home() {
+  
+  const repo: ClienteRepositorio = new ColecaoCliente()
 
-  const clientes = [
-    new Cliente('Carla Gabriela Schell', 36, '1'),
-    new Cliente('Mateus Lucas Garcia', 25, '2'),
-    new Cliente('Witor Schell Macario', 19, '3'),
-  ]
+  //alternar entre form e table
+  const [visivel , setVisivel] = useState<'table' | 'form'>('table');
+  //pega o cliente selecionado
+  const [cliente, setCliente] = useState<Cliente>(Cliente.vazio);
 
+  const [clientes, setClientes] = useState<Cliente[]>([]);
+
+  useEffect(obterTodos, [])
+
+  function obterTodos(){
+    repo.obterTodos().then(clientes => {
+      setClientes(clientes)
+      setVisivel('table')
+    })
+  }
   function clienteSelecionado(cliente: Cliente){
-    console.log(cliente.nome)
+    setCliente(cliente)
+    setVisivel('form')
+
   }
   function clienteExcluido(cliente: Cliente){
     console.log(cliente.nome)
   }
+  function salvarCliente(cliente : Cliente){
+    console.log(cliente)
+    setVisivel('table');
+  }
+  function novoCliente(){
+    setCliente(Cliente.vazio)
+    setVisivel('form')
+  }
 
-  //alternar entre form e table
-  const [visivel , setVisivel] = useState<'table' | 'form'>('table')
-  console.log(visivel)
   
 
   return (
@@ -32,12 +52,12 @@ export default function Home() {
 
       {visivel === 'table' ? (<>
         <div className='flex justify-end'>
-        <Button onClick={() => setVisivel('form')} className='mb-4' color='green'>Novo Cliente</Button>
+        <Button onClick={novoCliente} className='mb-4' color='green'>Novo Cliente</Button>
         </div>
         <Table clientes={clientes} clienteSelecionado={clienteSelecionado}  clienteExcluido={clienteExcluido}> </Table> 
         </>
 
-      ) : ( <Form cancelar={() => setVisivel('table')} ></Form> )}
+      ) : ( <Form cliente={cliente} cancelar={() => setVisivel('table')}  clienteChange={salvarCliente}></Form> )}
 
         
        

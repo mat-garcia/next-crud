@@ -22,7 +22,7 @@ export default function Form (props: FormProps){
             <Entry className="mb-4" onChange={setNome} label="Nome" value={nome}></Entry>
             <Entry onChange={setIdade} label="Idade" value={idade} type="number"></Entry>
             <div className="flex justify-end mt-7">
-                <Button  className="mr-2 " color="blue" onClick={() => props.clienteChange?.(new Cliente(nome,idade,id))}> {id ? 'Alterar' : 'Salvar'}</Button>
+                <Button  className="mr-2 " color="blue" onClick={() => props.clienteChange?.(new Cliente(nome,+idade,id))}> {id ? 'Alterar' : 'Salvar'}</Button>
                 <Button onClick={props.cancelar}> Cancelar </Button>
             </div>
         </div>
