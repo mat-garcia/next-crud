@@ -27,18 +27,23 @@ export default function Home() {
       setVisivel('table')
     })
   }
+  
   function clienteSelecionado(cliente: Cliente){
     setCliente(cliente)
     setVisivel('form')
 
   }
-  function clienteExcluido(cliente: Cliente){
-    console.log(cliente.nome)
+
+  async function clienteExcluido(cliente: Cliente){
+    await repo.excluir(cliente)
+    obterTodos()
   }
-  function salvarCliente(cliente : Cliente){
-    console.log(cliente)
-    setVisivel('table');
+
+  async function salvarCliente(cliente : Cliente){
+   await repo.salvar(cliente)
+    obterTodos()
   }
+
   function novoCliente(){
     setCliente(Cliente.vazio)
     setVisivel('form')
