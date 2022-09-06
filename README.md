@@ -1,5 +1,10 @@
 
-CRUD app on NextJS and Firebase.
+CRUD app on:
+
+- Tailwind css, Heroicons
+- NextJS
+- Firebase
+
 
 <img src='public/next-crud.png'>
 
